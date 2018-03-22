@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # "Database code" for the DB News.
 
 import datetime
@@ -26,15 +27,15 @@ def get_report():
     # Priting the report to console
     print("The most popular three articles of all time:")
     for article in most_viwed_articles:
-        print("* " + article[0] + " - " + str(article[1]) + " views:")
+        print("* " + article[0] + " - " + str(article[2]) + " views")
     print("")
-    print("The most popular article authors of all time")
+    print("The most popular article authors of all time:")
     for author in most_read_authors:
         print("* " + author[0] + " - " + str(author[1]) + " views")
     print("")
     print("Days in which more than 1% of requests lead to errors:")
     for day in days_with_erros:
-        print("* " + day[0].strftime("%b %d, %Y") +
+        print("* " + day[0] +
               " - " + str(round(day[3], 2)) + "% error")
 
 

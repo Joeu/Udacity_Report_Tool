@@ -18,7 +18,7 @@ psql (PostgreSQL) 9.5.12
 And also the database file from Udacity
 
 ```
-newsdata.sql
+[newsdata.sql] (https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip) - Download the file
 ```
 
 ## Installation
@@ -38,33 +38,19 @@ As the Python code queries against views, you will need to recreate the views to
 > Connected to the news database, the following commands are strictly necessary
 
     =>  CREATE VIEW question_1 AS
-            SELECT fulltitle.title, views.count
-            FROM 
-                (SELECT substring(log.path, 10, 10) AS path, count(*) AS count
-                FROM log
-                WHERE log.method = 'GET' AND log.path LIKE '%/article/%'
-                    GROUP BY substring(log.path, 10, 10)
-                    ORDER BY count(*) DESC) views
-            JOIN 
-                (SELECT articles.title,
-                replace(lower(replace(replace(articles.title, ' ', '-'), ',', '')), 'there-are-a-lot-of-bears', 'so-many-bears') AS concat_path
-                FROM articles) fulltitle
-            ON fulltitle.concat_path LIKE (('%' || views.path) || '%');
+            SELECT articles.title, articles.author, count(*)
+                FROM articles JOIN log ON '/article/'||articles.slug LIKE log.path
+            GROUP BY articles.title, articles.author
+            ORDER BY count DESC;
 
     =>  CREATE VIEW question_2 AS
-            SELECT works.name AS author, sum(question_1.count) AS total_views
-            FROM 
-                (SELECT authors.name, articles.title
-                FROM authors 
-                JOIN articles 
-                ON authors.id = articles.author) works
-            JOIN question_1 
-            ON works.title = question_1.title
-            GROUP BY works.name
-            ORDER BY (sum(question_1.count)) DESC;
+            SELECT authors.name, SUM(question_1.count) 
+                FROM question_1 JOIN authors ON question_1.author = authors.id 
+            GROUP BY authors.name 
+            ORDER BY SUM(question_1.count) DESC;
 
     =>  CREATE VIEW question_3 AS
-            SELECT result.day, result.not_ok, result.total,
+            SELECT TO_CHAR(result.day,'Mon DD, YYYY'), result.not_ok, result.total,
             (result.not_ok * 100) / result.total::float AS error_perc
             FROM 
                 (SELECT date_trunc('day', log."time") AS day,
