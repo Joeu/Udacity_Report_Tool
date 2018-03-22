@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # "Database code" for the DB News.
 
 import datetime
