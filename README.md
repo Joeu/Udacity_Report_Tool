@@ -29,8 +29,9 @@ And also the database file from Udacity
 
 As the Python code queries against views, you will need to recreate the views to get the report correctly
 
->Within the newsdata.sql container directory, connect to the database:
+>Within the newsdata.sql container directory, import the database and connect to it:
 
+    $ psql -d news -f newsdata.sql
     $ psql news
 
 > Connected to the news database, the following commands are strictly necessary
