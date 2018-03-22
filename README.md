@@ -17,9 +17,7 @@ psql (PostgreSQL) 9.5.12
 
 And also the database file from Udacity
 
-```
-[newsdata.sql] (https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip) - Download the file
-```
+* [newsdata.sql](https://d17h27t6h515a5.cloudfront.net/topher/2016/August/57b5f748_newsdata/newsdata.zip)
 
 ## Installation
 
